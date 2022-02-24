@@ -1,11 +1,17 @@
 package com.springconfig.annotations;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
 /*@Component("tennisCoach")*/
 //using Default Bean Id here
 @Component
+@Scope("singleton")
 public class TennisCoach implements Coach {
 	
 	private FortuneService fortuneService;
@@ -48,6 +54,20 @@ public class TennisCoach implements Coach {
 	public String getDailyFortune() {
 		return fortuneService.getFortune();
 		
+	}
+	
+	//define my init method
+	@PostConstruct
+	public void doMyStartUpStuff()
+	{
+		System.out.println("Inside doMyStartUpStuff");
+	}
+	
+	//define my destroy method
+	@PreDestroy
+	public void doMyCleanUpStuff()
+	{
+		System.out.println("Inside doMyCleanUpStuff");
 	}
 
 }
